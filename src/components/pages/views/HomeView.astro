@@ -1,0 +1,657 @@
+---
+/**
+ * HomeView — the landing page body.
+ *
+ * Shared by the default-locale route (`/`) and the locale-prefixed route
+ * (`/<locale>`). All copy is read from `pages.home.*` via `t()` / `tData()`,
+ * and internal links are localized with `localizedPath`. Featured projects and
+ * posts are loaded for the active locale and fall back to the default locale so
+ * the sections are never empty on a locale that hasn't translated its content
+ * yet. Each card links to the URL of the locale the content actually belongs
+ * to, so a fallback (default-locale) item still points at a real page.
+ */
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import { Hero } from '@/components/hero';
+import Button from '@/components/ui/form/Button/Button.astro';
+import Badge from '@/components/ui/data-display/Badge/Badge.astro';
+import Card from '@/components/ui/data-display/Card/Card.astro';
+import Icon from '@/components/ui/primitives/Icon/Icon.astro';
+import BlogCard from '@/components/blog/BlogCard.astro';
+import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
+import StackMarquee from '@/components/landing/StackMarquee.astro';
+import { getCollection } from 'astro:content';
+import siteConfig from '@/config/site.config';
+import { getPostUrl, getPublishedPosts } from '@/lib/blog';
+import { getProjectUrl, getVisibleProjects } from '@/lib/projects';
+import { t, tData, defaultLocale, localizedPath } from '@/i18n';
+
+interface Props {
+  /** Locale whose copy and content this page renders. Defaults to the site default. */
+  locale?: string;
+}
+
+interface IconCard {
+  icon: string;
+  title: string;
+  description: string;
+}
+interface Testimonial {
+  quote: string;
+  name: string;
+  role: string;
+}
+
+const { locale = defaultLocale } = Astro.props;
+
+// Featured projects for this locale, falling back to the default locale so the
+// section is never empty on a locale that hasn't translated its projects yet.
+let projectItems = await getVisibleProjects(locale);
+if (projectItems.length === 0 && locale !== defaultLocale) {
+  projectItems = await getVisibleProjects(defaultLocale);
+}
+const featuredProjects = projectItems
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 4);
+
+let postItems = await getPublishedPosts(locale);
+if (postItems.length === 0 && locale !== defaultLocale) {
+  postItems = await getPublishedPosts(defaultLocale);
+}
+const posts = [...postItems]
+  .sort((a, b) => {
+    if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+    return b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf();
+  })
+  .slice(0, 4);
+
+// Hero marquee — a focused subset of the tech stack, in this order, pulled from
+// the same `stack` collection so icons and links stay single-sourced. Seven logos
+// are wide enough to fill the constrained hero width and loop seamlessly on their
+// own; the Tech-stack section further down still shows the full stack.
+const heroStackOrder = ['Astro', 'Tailwind CSS', 'TypeScript', 'React', 'GitHub', 'Vercel', 'Claude','JavaScript'];
+const heroStackItems = (await getCollection('stack'))
+  .filter((e) => heroStackOrder.includes(e.data.name))
+  .sort((a, b) => heroStackOrder.indexOf(a.data.name) - heroStackOrder.indexOf(b.data.name))
+  .map((e) => ({
+    name: e.data.name,
+    icon: e.data.icon,
+    url: e.data.url,
+    version: e.data.version,
+    colorOklch: e.data.colorOklch,
+  }));
+
+const hero = tData<{
+  badge: string;
+  titleLine1: string;
+  titleLine2: string;
+  titleLine3: string;
+  description1: string;
+  description2: string;
+  github: string;
+  getStarted: string;
+}>('pages.home.hero', locale)!;
+const servicesSection = tData<{ badge: string; heading: string; lead: string; learnMore: string; cards: IconCard[] }>(
+  'pages.home.services',
+  locale
+)!;
+const portfolio = tData<{ badge: string; heading: string; lead: string; viewAll: string }>('pages.home.portfolio', locale)!;
+const testimonials = tData<{ badge: string; heading: string; lead: string; items: Testimonial[] }>(
+  'pages.home.testimonials',
+  locale
+)!;
+const aboutTeaser = tData<{
+  badge: string;
+  headingLine1: string;
+  headingLine2: string;
+  para2: string;
+  moreAboutMe: string;
+  statsIntro: string;
+  stat1: string;
+  stat2: string;
+  stat3: string;
+  basedIn: string;
+}>('pages.home.aboutTeaser', locale)!;
+const blogSection = tData<{ badge: string; heading: string; viewAll: string }>('pages.home.blog', locale)!;
+const cta = tData<{ badge: string; heading: string; description: string; primary: string; secondary: string }>(
+  'pages.home.cta',
+  locale
+)!;
+
+const servicesUrl = localizedPath('/services', locale);
+const projectsUrl = localizedPath('/projects', locale);
+const aboutUrl = localizedPath('/about', locale);
+const contactUrl = localizedPath('/contact', locale);
+const blogUrl = localizedPath('/blog', locale);
+// The getting-started guide lives at the default-locale URL; link there so the
+// CTA always resolves even before a locale has translated that post.
+const getStartedUrl = '/blog/astro-rocket-getting-started';
+
+// About-teaser copy with the configured location woven in (mirrors the original
+// page's conditional). Falls back to a location-free sentence when no city is set.
+const city = siteConfig.address?.city;
+const country = siteConfig.address?.country;
+const location = city ? (country ? `${city}, ${country}` : city) : '';
+const aboutPara1 = location
+  ? t('pages.home.aboutTeaser.para1WithLocation', locale, { location })
+  : t('pages.home.aboutTeaser.para1NoLocation', locale);
+const basedInDisplay = `${city ?? 'Your City'}${country ? `, ${country}` : ''}`;
+---
+
+<LandingLayout
+  title={t('pages.home.meta.title', locale)}
+  description={t('pages.home.meta.description', locale)}
+  image="/og-default.svg"
+  includePersonSchema={true}
+  includeProfessionalServiceSchema={true}
+>
+  <!-- Hero -->
+  <Hero layout="centered" size="xl" class="hero-dark-gradient" fullHeight>
+
+    <!-- Top CPU Icon & Badge -->
+    <div slot="badge" class="flex flex-col items-center justify-center mb-8 relative z-10">
+      <div class="p-4 mb-6 rounded-2xl bg-white/5 border border-white/10 shadow-lg backdrop-blur-sm">
+        <Icon name="lucide:cpu" class="w-8 h-8 text-white/80" />
+      </div>
+
+      <!-- Pulse Badge -->
+      <Badge variant="brand" pill pulse class="dark:bg-white/10 dark:text-white/90 dark:border-white/20 px-4 py-1.5 backdrop-blur-md shadow-sm font-medium">
+        {hero.badge}
+      </Badge>
+    </div>
+
+    <!-- Clean, Solid White Centered Heading -->
+    <h1 slot="title" class="max-w-5xl mx-auto text-center tracking-tight !text-[clamp(2.25rem,6vw,4.5rem)] font-bold text-white leading-[1.15] mb-12 relative z-10">
+      {hero.titleLine1} {hero.titleLine2} {hero.titleLine3}
+    </h1>
+
+    <!-- The Two Structural Cards (matching the image layout) -->
+    <div slot="description" class="flex flex-col gap-4 max-w-4xl mx-auto relative z-10">
+
+      <!-- Row 1: The Long Description -->
+      <div class="flex items-start gap-5 p-6 md:p-8 rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md text-left">
+        <div class="mt-1 p-2.5 rounded-lg border border-white/10 bg-white/5 text-blue-400 shrink-0">
+          <Icon name="lucide:brain-circuit" class="w-6 h-6" />
+        </div>
+        <p class="text-base md:text-lg leading-relaxed text-white/90 m-0">
+          {hero.description1}
+        </p>
+      </div>
+
+      <!-- Row 2: The Short Description / Name -->
+      <div class="flex items-center gap-5 p-6 md:p-8 rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md text-left">
+        <div class="p-2.5 rounded-lg border border-white/10 bg-white/5 text-blue-400 shrink-0">
+          <Icon name="lucide:infinity" class="w-6 h-6" />
+        </div>
+        <p class="text-base md:text-lg font-medium text-white/90 m-0">
+          {hero.description2}
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Darkened Outline Buttons -->
+    <Fragment slot="actions">
+      <div class="flex flex-wrap items-center justify-center gap-5 mt-10 relative z-10">
+        <Button size="lg" variant="outline" href={projectsUrl} class="bg-[#0f172a]/80 border-white/10 hover:bg-white/10 text-white px-8 py-6 rounded-xl backdrop-blur-md transition-all">
+          <Icon name="lucide:folder-search" size="sm" class="mr-3 text-blue-400" />
+          {hero.github}
+        </Button>
+        <Button size="lg" variant="outline" href={servicesUrl} class="bg-[#0f172a]/80 border-white/10 hover:bg-white/10 text-white px-8 py-6 rounded-xl backdrop-blur-md transition-all">
+          <Icon name="lucide:package" size="sm" class="mr-3 text-blue-400" />
+          {hero.getStarted}
+        </Button>
+      </div>
+    </Fragment>
+
+    <!-- Bottom Marquee -->
+    <div slot="bottom" class="mx-auto w-full max-w-6xl px-6 mt-20 opacity-70 hover:opacity-100 transition-opacity duration-500 relative z-10">
+      <div class="hp-hero-marquee" aria-hidden="true">
+        <StackMarquee items={heroStackItems} rows={1} duration={55} pauseOnHover={false} linked={false} cardWidth="auto" gap="1rem" />
+      </div>
+      <div class="hp-hero-logos" aria-hidden="true">
+        {heroStackItems.slice(0, 4).map((item) => (
+          <span class="hp-hero-logo">
+        <Icon name={item.icon} size="lg" />
+      </span>
+        ))}
+      </div>
+    </div>
+  </Hero>
+
+  <!-- Services Section -->
+  <section class="relative z-10 py-24 sm:py-32 overflow-hidden bg-background">
+    <!-- Ambient background glow utilizing the brand scale -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-900/10 via-transparent to-transparent pointer-events-none"></div>
+
+    <div class="mx-auto max-w-6xl px-6 flex flex-col gap-16 relative z-10">
+
+      <!-- Header Block -->
+      <div class="flex flex-col items-center gap-6 text-center" data-reveal>
+        <!-- Utilizing native theme styling for the badge -->
+        <Badge variant="brand" pill class="shadow-sm font-medium">
+          {servicesSection.badge}
+        </Badge>
+        <h2 class="font-display text-[clamp(2rem,5vw,3.5rem)] font-bold text-foreground tracking-tight leading-tight">
+          {servicesSection.heading}
+        </h2>
+        <p class="text-lg md:text-xl text-foreground-muted max-w-2xl mx-auto leading-relaxed">
+          {servicesSection.lead}
+        </p>
+      </div>
+
+      <!-- The Theme-Compliant Glass Grid -->
+      <div class="grid gap-6 md:grid-cols-3">
+        {servicesSection.cards.map((card, i) => (
+
+          <a href={servicesUrl} class="group relative flex flex-col p-8 rounded-[var(--theme-radius-xl)] border border-border-subtle bg-background-elevated/40 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:bg-background-elevated hover:border-brand-400/30 shadow-[var(--theme-shadow-sm)] hover:shadow-[var(--theme-shadow-xl)] overflow-hidden" data-reveal data-reveal-delay={i || undefined}>
+
+            <!-- Internal Hover Gradient (Injects the brand accent) -->
+            <div class="absolute inset-0 bg-gradient-to-br from-brand-400/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+
+            <div class="relative z-10 flex flex-col h-full gap-6">
+
+              <!-- Icon Container mapping to brand-500/brand-400 -->
+              <div class="w-14 h-14 rounded-[var(--theme-radius-lg)] border border-border-subtle bg-background-tertiary flex items-center justify-center text-brand-500 dark:text-brand-400 shrink-0 group-hover:scale-110 group-hover:bg-brand-500/10 transition-all duration-500 ease-out">
+                <Icon name={card.icon} size="md" />
+              </div>
+
+              <!-- Card Content -->
+              <div class="flex-1 flex flex-col min-w-0">
+                <h3 class="text-xl font-semibold text-foreground tracking-tight mb-3">
+                  {card.title}
+                </h3>
+                <p class="text-base text-foreground-muted leading-relaxed flex-1">
+                  {card.description}
+                </p>
+
+                <!-- Structural Action Link -->
+                <div class="flex items-center gap-2 text-sm font-medium text-brand-500 dark:text-brand-400 mt-8 group-hover:text-brand-600 dark:group-hover:text-brand-300 transition-colors">
+                  {servicesSection.learnMore}
+                  <Icon name="lucide:arrow-right" class="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform duration-300" />
+                </div>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="work" class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
+    <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
+      <div class="flex flex-col items-center gap-4 text-center" data-reveal>
+        <div class="flex flex-col items-center gap-6">
+          <Badge variant="brand" pill>{portfolio.badge}</Badge>
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
+            {portfolio.heading}
+          </h2>
+        </div>
+        <p class="text-lg text-foreground-muted max-w-2xl mx-auto">
+          {portfolio.lead}
+        </p>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        {featuredProjects.map((project, i) => (
+          <Card
+            variant="elevated"
+            hover
+            padding="none"
+            href={project.data.placeholder ? undefined : getProjectUrl(project.id, project.data.locale)}
+            class="group flex flex-col"
+            data-reveal
+            data-reveal-delay={i || undefined}
+          >
+            <div class="flex flex-1 flex-col p-6">
+              <div class="mb-3 flex items-start justify-between gap-4">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                  <Icon name="layers" size="sm" />
+                </div>
+                <Icon name="arrow-up-right" size="sm" class="text-foreground-muted group-hover:text-brand-500 transition-colors shrink-0 ml-auto" />
+              </div>
+              <div class="mb-2 flex items-baseline gap-2">
+                <h3 class="font-display text-lg font-bold text-foreground">{project.data.title}</h3>
+                {project.data.year && (
+                  <span class="text-xs text-foreground-muted">{project.data.year}</span>
+                )}
+              </div>
+              <p class="text-sm text-foreground-muted leading-relaxed mb-4 flex-1">{project.data.description}</p>
+              {project.data.tags && project.data.tags.length > 0 && (
+                <div class="flex flex-wrap gap-1.5">
+                  {project.data.tags.map((tag) => (
+                    <Badge variant="brand">#{tag}</Badge>
+                  ))}
+                </div>
+              )}
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      <div class="text-center mt-4">
+        <Button variant="outline" href={projectsUrl}>
+          {portfolio.viewAll}
+          <Icon name="arrow-right" size="sm" />
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="relative z-10 py-[var(--space-section-md)] bg-background-secondary border-t border-border">
+    <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
+      <div class="flex flex-col items-center gap-4 text-center" data-reveal>
+        <div class="flex flex-col items-center gap-6">
+          <Badge variant="brand" pill>{testimonials.badge}</Badge>
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
+            {testimonials.heading}
+          </h2>
+        </div>
+        <p class="text-lg text-foreground-muted">
+          {testimonials.lead}
+        </p>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        {testimonials.items.map((item, i) => (
+          <Card variant="elevated" padding="lg" hover data-reveal data-reveal-delay={i || undefined}>
+            <div class="flex flex-col h-full gap-4">
+              <div class="flex gap-1 text-brand-500" role="img" aria-label="5 out of 5 stars">
+                {[...Array(5)].map(() => (
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <blockquote class="flex-1 text-foreground-muted leading-relaxed">
+                {item.quote}
+              </blockquote>
+              <div class="flex items-center gap-3 pt-4 border-t border-border">
+                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-brand-500/30 to-brand-500/10 flex items-center justify-center text-brand-500 font-bold text-sm shrink-0">
+                  {item.name.charAt(0)}
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-foreground">{item.name}</p>
+                  <p class="text-xs text-foreground-muted">{item.role}</p>
+                </div>
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- About Teaser -->
+  <section class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="grid gap-10 glitch:grid-cols-2 glitch:gap-12">
+        <div class="flex flex-col justify-center sm:items-center sm:text-center glitch:items-start glitch:text-left" data-reveal data-reveal-ease="smooth">
+          <div class="flex flex-col gap-6 mb-6 sm:items-center glitch:items-start">
+            <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">{aboutTeaser.badge}</Badge>
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
+              {aboutTeaser.headingLine1}<br />
+              <span class="text-brand-500">{aboutTeaser.headingLine2}</span>
+            </h2>
+          </div>
+          <p class="text-lg text-foreground-muted leading-relaxed mb-4 sm:mb-0 sm:max-w-xl glitch:mb-4 glitch:max-w-none">
+           {aboutPara1}
+          </p>
+          <p class="text-lg text-foreground-muted leading-relaxed mb-8 sm:max-w-xl glitch:max-w-none sm:hidden glitch:block">
+           {aboutTeaser.para2}
+          </p>
+           <Button variant="outline" href={aboutUrl} class="self-start sm:self-center glitch:self-start sm:hidden glitch:inline-flex">
+            {aboutTeaser.moreAboutMe}
+            <Icon name="arrow-right" size="sm" />
+          </Button>
+        </div>
+        <Card variant="elevated" padding="lg" class="h-full flex flex-col" data-reveal data-reveal-delay="1" data-reveal-ease="smooth">
+          <p class="text-sm text-foreground mb-5 text-center sm:hidden glitch:block">{aboutTeaser.statsIntro}</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 glitch:grid-cols-2 gap-3 flex-1 auto-rows-fr">
+            <div class="bg-background-tertiary rounded-xl p-5 flex flex-col items-center justify-center text-center gap-2 border-t-2 border-brand-500/40 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:border-brand-500 cursor-default h-full">
+              <Icon name="globe" class="w-10 h-10 text-brand-500" />
+              <p class="text-sm font-semibold text-foreground">{aboutTeaser.stat2}</p>
+            </div>
+            <div class="bg-background-tertiary rounded-xl p-5 flex flex-col items-center justify-center text-center gap-2 border-t-2 border-brand-500/40 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:border-brand-500 cursor-default h-full">
+              <Icon name="history" class="w-10 h-10 text-brand-500" />
+              <p class="text-sm font-semibold text-foreground">{aboutTeaser.stat1}</p>
+            </div>
+            <div class="bg-background-tertiary rounded-xl p-5 flex flex-col items-center justify-center text-center gap-2 border-t-2 border-brand-500/40 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:border-brand-500 cursor-default h-full">
+              <Icon name="map-pin" class="w-10 h-10 text-brand-500" />
+              <p class="text-sm font-semibold text-foreground">{aboutTeaser.basedIn} <br class="sm:hidden" /></p>
+            </div>
+            <div class="bg-background-tertiary rounded-xl p-5 flex flex-col items-center justify-center text-center gap-2 border-t-2 border-brand-500/40 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:border-brand-500 cursor-default h-full">
+              <Icon name="globe" class="w-10 h-10 text-brand-500" />
+              <p class="text-sm font-semibold text-foreground">{aboutTeaser.stat3} <br class="sm:hidden" /></p>
+            </div>
+          </div>
+        </Card>
+        <div class="hidden sm:flex justify-center glitch:hidden" data-reveal data-reveal-delay="2">
+          <Button variant="outline" href={aboutUrl}>
+            {aboutTeaser.moreAboutMe}
+            <Icon name="arrow-right" size="sm" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <!--<section class="relative z-10 py-[var(&#45;&#45;space-section-md)] bg-background-secondary border-t border-border">-->
+  <!--  <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">-->
+  <!--    <div class="flex flex-col items-center gap-6 text-center" data-reveal>-->
+  <!--      <Badge variant="brand" pill>{blogSection.badge}</Badge>-->
+  <!--      <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">-->
+  <!--        {blogSection.heading}-->
+  <!--      </h2>-->
+  <!--    </div>-->
+
+  <!--    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">-->
+  <!--      {posts.map((post, index) => (-->
+  <!--        <BlogCard-->
+  <!--          title={post.data.title}-->
+  <!--          description={post.data.description}-->
+  <!--          href={getPostUrl(post.id, post.data.locale)}-->
+  <!--          publishedAt={post.data.publishedAt}-->
+  <!--          tags={post.data.tags}-->
+  <!--          author={post.data.author}-->
+  <!--          image={post.data.image}-->
+  <!--          svgSlug={post.data.svgSlug}-->
+  <!--          body={post.body}-->
+  <!--          revealDelay={index}-->
+  <!--          class={index === 3 ? 'hidden sm:block lg:hidden' : undefined}-->
+  <!--        />-->
+  <!--      ))}-->
+  <!--    </div>-->
+
+  <!--    <div class="flex justify-center">-->
+  <!--      <Button variant="outline" href={blogUrl}>-->
+  <!--        {blogSection.viewAll}-->
+  <!--        <Icon name="arrow-right" size="sm" />-->
+  <!--      </Button>-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <!--</section>-->
+
+ <!-- CTA — `background` so it alternates with the secondary Blog section above and the secondary Footer below. -->
+  <section class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
+    <!-- Mobile: flat section, no card -->
+    <div class="glitch:hidden mx-auto max-w-2xl px-6 text-center" data-reveal>
+      <Badge variant="brand" pill class="mb-6">{cta.badge}</Badge>
+      <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">
+        {cta.heading}
+      </h2>
+      <p class="text-lg text-foreground-muted mb-8 text-balance">
+        {cta.description}
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button size="lg" href={contactUrl} class="cta-btn-brand">
+          {cta.primary}
+          <Icon name="arrow-right" size="sm" />
+        </Button>
+        <Button size="lg" variant="outline" href={aboutUrl}>
+          {cta.secondary}
+          <Icon name="arrow-right" size="sm" />
+        </Button>
+      </div>
+    </div>
+
+    <!-- Desktop: contained LetterGlitch band with glass card -->
+    <LetterGlitchBand>
+      <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">
+        {cta.heading}
+      </h2>
+      <p class="text-lg text-foreground-muted mb-8 text-balance">
+        {cta.description}
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button size="lg" href={contactUrl} class="hero-btn-brand">
+          {cta.primary}
+          <Icon name="arrow-right" size="sm" />
+        </Button>
+        <Button size="lg" variant="outline" href={aboutUrl}>
+          {cta.secondary}
+          <Icon name="arrow-right" size="sm" />
+        </Button>
+      </div>
+    </LetterGlitchBand>
+  </section>
+
+<script>
+  function initCountup() {
+    const counters = document.querySelectorAll<HTMLElement>('[data-countup]:not([data-countup-init])');
+    if (counters.length === 0) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        const el = entry.target as HTMLElement;
+        const target = parseInt(el.dataset.countup ?? '0', 10);
+        const suffix = el.dataset.suffix ?? '';
+        const duration = 1200;
+        const start = performance.now();
+        const tick = (now: number) => {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(eased * target) + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.4 });
+    counters.forEach((el) => {
+      el.dataset.countupInit = 'true';
+      observer.observe(el);
+    });
+  }
+
+  initCountup();
+</script>
+
+<style is:global>
+  /* Widen the homepage hero description from md upward so the paragraph
+     reads on two lines instead of three on landscape phones, tablets,
+     and all laptop/desktop sizes. Scoped via the unique
+     .hero-dark-gradient class so other heroes keep the default
+     max-w-xl reading measure. */
+  @media (min-width: 768px) {
+    .hero-dark-gradient .hero-title-slot + div {
+      max-width: 48rem;
+    }
+  }
+
+  /* ── Homepage hero tech-stack marquee ──────────────────────────────────────
+     A decorative tech-stack strip floored into the hero in place of the scroll
+     indicator. It must stay secondary to the H1 / description / CTAs, so we strip
+     the card "box" (brand border, glow ring, panel surface) and let the
+     brand-coloured logos float on the hero gradient as light accents. The logos
+     keep their brand colour and soft chip; only the surrounding chrome is removed. */
+  .hp-hero-marquee .stack-marquee-item > * {
+    background: transparent;   /* drop the card panel */
+    border-color: transparent; /* drop the brand border */
+    box-shadow: none;          /* drop the brand glow ring */
+    padding-left: var(--space-3);  /* tighter now there's no box, so logos sit closer */
+    padding-right: var(--space-3);
+  }
+  /* Lighter, calmer tool names so the colourful logos lead the eye. */
+  .hp-hero-marquee .stack-marquee-item .font-display {
+    font-weight: 500;
+    color: var(--color-foreground-muted);
+  }
+
+  /* Floored into the hero: the marquee is the section's last flex child, pushed to
+     the floor (mt-auto, in Hero.astro). The CONTENT stays at the top and the
+     leftover hero height opens up BETWEEN the CTAs and the marquee — the roomy
+     "Chrome look". The section's column `gap` (--hero-floor-gap) is a GUARANTEED
+     MINIMUM gap, so on shorter windows the marquee can never crowd the buttons;
+     taller windows simply get more room. padding-bottom is the breathing room
+     beneath it. */
+  section.hero-dark-gradient {
+    --hero-floor-gap: var(--space-16); /* 4rem — minimum gap above the marquee */
+    padding-bottom: var(--space-16); /* 4rem — breathing room below it */
+  }
+  .hp-hero-marquee {
+    pointer-events: none; /* decorative; never intercepts taps */
+  }
+
+  /* Entrance: the marquee sits outside the content stagger container, so it fades
+     in on its own once the hero has settled (a vertical slide would fight the
+     logos' horizontal scroll). */
+  @media (prefers-reduced-motion: no-preference) {
+    .hp-hero-marquee {
+      animation: hp-hero-marquee-fade 0.6s ease-out 1.2s backwards;
+    }
+  }
+  @keyframes hp-hero-marquee-fade {
+    from { opacity: 0.01; }
+    to   { opacity: 1; }
+  }
+
+  /* Hidden on phones — portrait (width) and landscape (short + coarse pointer),
+     matching the tech-stack section's behaviour. Shown from tablet up. */
+  @media (max-width: 767px) {
+    .hp-hero-marquee { display: none; }
+  }
+  @media (orientation: landscape) and (max-height: 500px) and (pointer: coarse) {
+    .hp-hero-marquee { display: none; }
+  }
+
+  /* Portrait-phone static stack logos — the lightweight counterpart to the
+     marquee. Hidden by default and shown only on portrait phones, exactly where
+     the marquee is hidden. A centered, non-interactive row: no links and no
+     animation loop, so it costs nothing after paint. */
+  .hp-hero-logos {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    pointer-events: none;
+  }
+  @media (max-width: 767px) and (orientation: portrait) {
+    .hp-hero-logos { display: flex; padding-bottom: 2rem; }
+  }
+
+  .hp-hero-logo {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 9999px;
+    color: var(--color-brand-500);
+    background: color-mix(in oklch, var(--color-brand-500) 12%, transparent);
+  }
+
+  /* One-time fade-in only (reuses the marquee's keyframe); nothing loops. */
+  @media (prefers-reduced-motion: no-preference) {
+    .hp-hero-logos {
+      animation: hp-hero-marquee-fade 0.6s ease-out 1.2s backwards;
+    }
+  }
+</style>
+
+</LandingLayout>

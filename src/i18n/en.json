@@ -1,0 +1,517 @@
+{
+  "nav": {
+    "skipToContent": "Skip to content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "selectLanguage": "Select language",
+    "currentLanguage": "Current language",
+    "mainNav": "Main navigation",
+    "mobileNav": "Mobile navigation",
+    "toggleMenu": "Toggle menu",
+    "sectionNavigate": "Navigate",
+    "sectionTheme": "Theme",
+    "sectionLanguage": "Language",
+    "sectionConnect": "Connect",
+    "items": {
+      "services": "Services",
+      "projects": "Projects",
+      "blog": "Blog",
+      "about": "About",
+      "contact": "Contact"
+    }
+  },
+  "common": {
+    "readMore": "Read more",
+    "loading": "Loading…",
+    "backToTop": "Back to top",
+    "search": "Search",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "next": "Next",
+    "previous": "Previous",
+    "home": "Home"
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Latest articles and updates",
+    "readingTime": "{minutes} min read",
+    "publishedOn": "Published on {date}",
+    "updatedOn": "Updated on {date}",
+    "writtenBy": "Written by {author}",
+    "tagsLabel": "Tags",
+    "featured": "Featured",
+    "draft": "Draft",
+    "noPostsFound": "No posts found.",
+    "tableOfContents": "Table of contents",
+    "shareThisPost": "Share this post",
+    "relatedPosts": "Related Posts",
+    "share": "Share:",
+    "shareOn": "Share on {platform}",
+    "copyLink": "Copy link",
+    "metaTitle": "Blog",
+    "metaDescription": "Articles on web design, development, and the web by Astro Rocket.",
+    "heroBadge": "All posts",
+    "heroDescription": "Articles on Astro, web performance, design systems, and building with Astro Rocket.",
+    "allPosts": "All posts",
+    "noPosts": "No posts found",
+    "pageMetaTitle": "Blog — Page {page}",
+    "pageMetaDescription": "Page {page} of {total} — articles on Astro, web performance, design, and the web.",
+    "pageBadge": "Page {page} of {total}",
+    "newestPosts": "Newest posts",
+    "tagMetaTitle": "#{tag} — Blog",
+    "tagMetaDescription": "Posts tagged \"{tag}\".",
+    "tagBadge": "Tag",
+    "tagCountOne": "{count} post tagged \"{tag}\".",
+    "tagCountOther": "{count} posts tagged \"{tag}\".",
+    "tagEmpty": "No posts found for this tag.",
+    "tagBackToAll": "Back to all posts",
+    "onThisPage": "On this page",
+    "backToBlog": "Back to Blog",
+    "updated": "Updated",
+    "followAlong": "Follow along",
+    "followAlongLead": "Stay in the loop — new articles, thoughts, and updates.",
+    "rssFeed": "RSS Feed",
+    "emailLabel": "Email"
+  },
+  "comments": {
+    "title": "Comments",
+    "loadError": "Comments failed to load. Please refresh and try again.",
+    "requiresJs": "Comments require JavaScript to load."
+  },
+  "projects": {
+    "title": "Projects",
+    "description": "Tommy-Portfolio",
+    "viewProject": "View project",
+    "viewSource": "View source",
+    "noProjectsFound": "No projects found.",
+    "metaTitle": "Projects",
+    "metaDescription": "Selected work — websites, tools, and open-source projects built by Astro Rocket.",
+    "heroBadge": "Projects",
+    "heroDescription": "Work Built to Last.",
+    "allProjects": "All projects",
+    "pageMetaTitle": "Projects — Page {page}",
+    "pageMetaDescription": "Page {page} of {total} — selected work, tools, and open-source projects by Astro Rocket.",
+    "pageBadge": "Page {page} of {total}",
+    "tagMetaTitle": "#{tag} — Projects",
+    "tagMetaDescription": "Projects tagged \"{tag}\".",
+    "tagBadge": "Tag",
+    "tagCountOne": "{count} project tagged \"{tag}\".",
+    "tagCountOther": "{count} projects tagged \"{tag}\".",
+    "tagEmpty": "No projects found for this tag.",
+    "tagBackToAll": "Back to all projects",
+    "backToProjects": "Back to Projects",
+    "moreProjects": "More projects",
+    "ctaBadge": "Let's talk",
+    "ctaHeading": "Want something like this?",
+    "ctaLead": "I build with the same care and craft you see here. If you've got a project, let's see what we can make together.",
+    "ctaPrimary": "Start a project",
+    "ctaSecondary": "More about me",
+    "closingHeading": "Have a project in mind?",
+    "closingLead": "Whether it's a new build or something that needs a fresh perspective — I'd love to hear about it."
+  },
+  "pagination": {
+    "page": "Page {current} of {total}",
+    "label": "Pagination",
+    "previousPage": "Previous page",
+    "nextPage": "Next page"
+  },
+  "errors": {
+    "pageNotFound": "Page not found",
+    "pageNotFoundMessage": "The page you're looking for doesn't exist or has moved.",
+    "goHome": "Go to homepage",
+    "metaTitle": "Page not found",
+    "metaDescription": "This page has moved, been removed, or never existed in the first place.",
+    "badge": "404 — page not found",
+    "titleLead": "Page not",
+    "titleHighlight": "found.",
+    "description": "This page has moved, been removed, or never existed in the first place. Let's get you back on track.",
+    "backHome": "Back to home",
+    "browseBlog": "Browse the blog",
+    "tryInstead": "Try one of these instead",
+    "projectsDesc": "Selected work and case studies.",
+    "blogDesc": "Notes on design, code, and the craft.",
+    "contactTitle": "Contact",
+    "contactDesc": "Start a conversation about your project."
+  },
+  "newsletter": {
+    "heading": "Subscribe to the newsletter",
+    "description": "Get the latest posts in your inbox.",
+    "emailPlaceholder": "Enter your email",
+    "subscribe": "Subscribe",
+    "subscribing": "Subscribing…",
+    "success": "Thanks for subscribing!",
+    "genericError": "Something went wrong",
+    "error": "Subscription failed. Please try again."
+  },
+  "contact": {
+    "heading": "Get in touch",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send message",
+    "sending": "Sending…",
+    "success": "Message sent successfully!",
+    "genericError": "Something went wrong",
+    "error": "Failed to send message. Please try again."
+  },
+  "theme": {
+    "selectColourTheme": "Select colour theme",
+    "colourTheme": "Colour theme",
+    "colourMode": "Colour mode",
+    "modeTrigger": "Theme: {mode}. Click to change.",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark",
+    "currentlyLight": "Currently light",
+    "currentlyDark": "Currently dark",
+    "swatchLabel": "{name} theme"
+  },
+  "search": {
+    "placeholder": "Search posts, projects, and pages…",
+    "inputLabel": "Search query",
+    "resultsLabel": "Search results",
+    "hint": "Start typing to search the site.",
+    "noResults": "No results for “{query}”",
+    "unavailable": "The search index is generated at build time and isn’t available in <code class=\"rounded bg-secondary px-1.5 py-0.5 text-xs\">astro dev</code>.<br />Run <code class=\"rounded bg-secondary px-1.5 py-0.5 text-xs\">pnpm build &amp;&amp; pnpm preview</code> to try it locally."
+  },
+  "footer": {
+    "copyright": "© {year} {siteName}. All rights reserved.",
+    "builtWith": "Built with Astro Rocket",
+    "followOn": "Follow us on {platform}"
+  },
+  "pages": {
+    "about": {
+      "meta": {
+        "title": "About",
+        "description": "Tommy-Portfolio"
+      },
+      "hero": {
+        "badge": "About",
+        "titleLead": "Tommy",
+        "typingWords": [
+          "Software Engineer",
+          "Driven by Purpose.",
+          "Built for Endurance."
+        ],
+        "description": "Building Purpose-Driven Digital Systems for Long-Term Growth."
+      },
+      "intro": {
+        "badge": "Foundation",
+        "heading": "The Initiating Force",
+        "paragraphs": [
+          "I operate with a strong, natural drive to initiate projects and push boundaries.",
+          "When I take on a challenge, I bring intense focus and take absolute ownership of the outcomes, ensuring we start strong and maintain momentum."],
+        "facts": [
+          {
+            "icon": "rocket",
+            "title": "Astro 7",
+            "description": "Built on the latest Astro release."
+          },
+          { "icon": "layout", "title": "12 themes", "description": "Switch themes with one line." },
+          {
+            "icon": "code-2",
+            "title": "57+ components",
+            "description": "Composable, production-ready."
+          },
+          {
+            "icon": "sparkles",
+            "title": "Dark mode",
+            "description": "Built in, no extra setup needed."
+          },
+          {
+            "icon": "award",
+            "title": "Built-in i18n",
+            "description": "Multi-language support out of the box."
+          },
+          {
+            "icon": "zap",
+            "title": "Zero config SEO",
+            "description": "Structured data & meta tags included."
+          }
+        ]
+      },
+      "principles": {
+        "badge": "Commitment",
+        "heading": "Endurance & Commitment",
+        "lead": "I have a proven ability to sustain deep, committed focus and clear communication across extended timelines and significant distances.\n I am built for the long haul—easily managing commitments and strategies that span many years.",
+        "items": [
+          {
+            "icon": "zap",
+            "title": "Performance First",
+            "description": "Zero JavaScript by default. Every component is optimised for speed, Core Web Vitals, and lean output."
+          },
+          {
+            "icon": "award",
+            "title": "Developer Experience",
+            "description": "TypeScript throughout, sensible defaults, and a component library you can drop straight into any page."
+          },
+          {
+            "icon": "rocket",
+            "title": "Modern from the Ground Up",
+            "description": "Astro 7, Tailwind CSS 4, and a clean architecture that's easy to extend and maintain."
+          }
+        ]
+      },
+      "stack": {
+        "badge": "Tools & Tech",
+        "title": "The Stack",
+        "description": "Technologies I like to play with..."
+      },
+      "faq": {
+        "badge": "Good to know",
+        "heading": "Frequently asked questions",
+        "lead": "Everything you need to know before getting started.",
+        "cards": [
+          {
+            "icon": "rocket",
+            "title": "About Astro",
+            "items": [
+              {
+                "question": "What is Astro?",
+                "answer": "Astro is a modern web framework built for content-driven sites. It ships zero JavaScript by default — only sending what the page actually needs. The result is fast load times, excellent Core Web Vitals scores, and lean, maintainable code."
+              },
+              {
+                "question": "Why build with Astro?",
+                "answer": "Astro is the right tool for content-heavy sites: minimal JavaScript, clean HTML, great SEO out of the box, and a developer experience that stays out of your way. It's lean, purposeful, and built to last."
+              },
+              {
+                "question": "What can I build with Astro Rocket?",
+                "answer": "Portfolios, business sites, marketing pages, blogs, documentation sites — any content-driven project. Astro Rocket gives you the structure, components, and defaults to hit the ground running."
+              },
+              {
+                "question": "Is Astro Rocket listed on the official Astro themes directory?",
+                "answer": "Yes. <a href=\"https://astro.build/themes/details/astro-rocket/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline underline-offset-2 decoration-brand-500 hover:text-brand-400 transition-colors\">Astro Rocket</a> is listed on the official Astro themes directory as a free, production-ready theme."
+              },
+              {
+                "question": "Will Astro Rocket keep up with new Astro releases?",
+                "answer": "Yes. Astro Rocket is actively maintained and updated to track new Astro releases. Follow along on the blog or watch the GitHub repository for updates."
+              }
+            ]
+          },
+          {
+            "icon": "code-2",
+            "title": "Using the theme",
+            "items": [
+              {
+                "question": "Is it free to use?",
+                "answer": "Yes, completely free. Astro Rocket is MIT licensed — use it for personal and commercial projects, no attribution required."
+              },
+              {
+                "question": "How do I switch themes?",
+                "answer": "Change a single line in your config. Astro Rocket ships with 12 hand-crafted colour themes — swap between them instantly without touching a line of CSS."
+              },
+              {
+                "question": "Does it support TypeScript?",
+                "answer": "Yes, TypeScript is used throughout. All components, configs, and utilities are fully typed."
+              },
+              {
+                "question": "How do I add my own language for i18n?",
+                "answer": "Astro Rocket's i18n is config-driven. Add your locale to the i18n config file, create a matching translation file, and the routing and UI adapt automatically."
+              },
+              {
+                "question": "Where do I report bugs or suggest features?",
+                "answer": "Open an issue or start a discussion on the <a href=\"https://github.com/hansmartensdev/astro-rocket\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline underline-offset-2 decoration-brand-500 hover:text-brand-400 transition-colors\">GitHub repository</a>. Contributions and feedback are always welcome."
+              }
+            ]
+          }
+        ]
+      },
+      "openSource": {
+        "badge": "Mission & Vision",
+        "heading": "The Mission",
+        "description": "My knowledge and expertise are tools for creating new opportunities, not for constantly repairing the past. My driving force is utilizing my skills to construct independent, forward-moving work.",
+        "button": "View on GitHub",
+        "cards": [
+          {
+            "title": "Made by Hans Martens",
+            "text": "Astro Rocket"
+          },
+          {
+            "title": "MIT License",
+            "text": "Free to use in personal and commercial projects. No attribution required, though a star on GitHub is always appreciated."
+          },
+          {
+            "title": "Actively maintained",
+            "text": "The theme is kept up to date with new Astro releases and regularly improved based on community feedback."
+          }
+        ]
+      },
+      "cta": {
+        "badge": "Get started",
+        "heading": "Got an idea in your mind?",
+        "description": "I design and build new websites from scratch — every project, start to finish, by me. Tell me what you have in mind.",
+        "button": "Start a project"
+      }
+    },
+    "services": {
+      "meta": {
+        "title": "Services",
+        "description": "Tommy-Portfolio"
+      },
+      "includedLabel": "What's included",
+      "hero": {
+        "badge": "Services",
+        "titleLead": "High-Value Solutions.",
+        "titleHighlight": "Full Ownership.",
+        "description": "Three core services, one consistent standard. From the first wireframe to the final Lighthouse score, every project gets the same attention to detail.",
+        "jumpLabels": ["Design", "Development", "Performance"]
+      },
+      "design": {
+        "badge": "Design",
+        "heading": "Foundational Information Architecture",
+        "paragraphs": [
+          "The Focus: Establishing the absolute starting point.",
+          "The Value: We bypass pre-packaged interpretations and get straight to the raw, unvarnished facts. This package is for clients who need absolute truth and clarity in their information before they make any strategic decisions or build new systems."
+        ],
+        "included": [
+          { "lead": "Bespoke layouts", "text": "built for your content, not from a template. Every section earns its place by serving the page's goal." },
+          { "lead": "Responsive across breakpoints", "text": "phone, tablet, desktop, ultrawide. Layouts reflow with intent, not just shrink to fit." },
+          { "lead": "Typography systems", "text": "readable, scaleable, on-brand. A clear hierarchy from page title down to caption, tuned for long-form reading." },
+          { "lead": "Light & dark themes", "text": "one design, two moods, user's choice. Both modes are checked at every step, not retrofitted at the end." },
+          { "lead": "Considered motion", "text": "interactions that guide, never distract. Reduced-motion preferences are respected without exception." },
+          { "lead": "Accessibility baked in", "text": "contrast, focus, semantic structure. Keyboard paths and screen-reader output are verified before launch." }
+        ],
+        "ctaLabel": "Discuss a design project"
+      },
+      "development": {
+        "badge": "Development",
+        "heading": "Behavioral State Analysis & Integration",
+        "paragraphs": [
+          "The Focus: Understanding the origin and mapping the path forward.",
+          "The Value: We track complex human variables over time. By analyzing the core elements of user behavior and the psychology of how people interact, this package delivers solutions that don't just predict what people will do, but understand why they do it, allowing us to build better, more responsive experiences."
+        ],
+        "included": [
+          { "lead": "Astro + Tailwind", "text": "modern stack, minimal JavaScript, clean HTML. The browser renders the page almost instantly, with no hydration tax." },
+          { "lead": "Typed content collections", "text": "structured blog, projects, and data. Schema validation runs at build time, so broken content never ships." },
+          { "lead": "Forms & integrations", "text": "protected, GDPR-aware, hooked into your tools. Submissions reach your inbox or CRM without leaking client-side." },
+          { "lead": "Hosting & deploy", "text": "Netlify, Vercel, Cloudflare, or your own infra. Preview deploys for every branch, so changes can be reviewed before they go live." },
+          { "lead": "Version control & CI", "text": "git-based workflow, repeatable deploys. Automated checks gate every pull request before merge." },
+          { "lead": "Handover documentation", "text": "code, keys, and a README you can actually read. Written so a future developer (or future you) can pick the project up without a tour." }
+        ],
+        "ctaLabel": "Discuss to develop a project"
+      },
+      "performance": {
+        "badge": "Performance",
+        "heading": "Autonomous Lifecycle Development",
+        "paragraphs": [
+          "The Focus: Sovereign, independent architecture.",
+          "The Value: Designing systems that can sustain themselves. The goal is to build robust, independent frameworks—focusing our efforts on creating new, forward-moving projects rather than getting bogged down in maintaining outdated legacy systems. We build things meant to stand on their own."
+        ],
+        "included": [
+          { "lead": "Core Web Vitals", "text": "LCP, INP, and CLS held to Google's thresholds. Measured on real devices, not just synthetic tests." },
+          { "lead": "Image pipeline", "text": "modern formats, responsive sizes, lazy loading. Hero images art-directed so they look right on every screen." },
+          { "lead": "Technical SEO", "text": "metadata, sitemaps, structured data, OG images. All wired up and validated before the first crawl." },
+          { "lead": "Accessibility", "text": "WCAG-aware markup and verified focus order. Tested with a screen reader and the keyboard alone, not just a contrast checker." },
+          { "lead": "Lighthouse audits", "text": "measurable scores delivered with the site. Repeatable in CI so they don't quietly drift after launch." },
+          { "lead": "Privacy-friendly analytics", "text": "useful data, no cookie banner. Self-hosted or vendor-anonymised, never sold on." }
+        ],
+        "ctaLabel": "Start a project"
+      },
+      "process": {
+        "badge": "How it works",
+        "heading": "A clear, honest process",
+        "lead": "Four stages, one point of contact, no surprises.",
+        "steps": [
+          { "title": "Discovery", "description": "A conversation about your goals, your audience, and what success looks like. No obligation." },
+          { "title": "Proposal", "description": "A clear scope, timeline, and cost. One page, plain language, fixed price." },
+          { "title": "Design & Build", "description": "Short cycles with regular check-ins. You see the site evolve as it's built." },
+          { "title": "Launch & Support", "description": "Deploy, hand over, stay available. Iteration after launch is straightforward." }
+        ]
+      },
+      "cta": {
+        "badge": "Let's talk",
+        "heading": "Have a project in mind?",
+        "description": "Send a short note about what you're building and what you need. I read every message and reply within a working day.",
+        "primary": "Start a project",
+        "secondary": "More about me"
+      }
+    },
+    "contact": {
+      "meta": {
+        "title": "Contact",
+        "description": "Tommy-Portfolio"
+      },
+      "hero": {
+        "badge": "Start a project",
+        "titleLead": "Tell me about your",
+        "titleHighlight": "new project",
+        "description": "I design and build new websites from scratch — every project, start to finish, by me. Tell me what you have in mind."
+      },
+      "formTitle": "Project details",
+      "channelsTitle": "Other channels",
+      "channelsSubtitle": "Prefer a direct connection? Pick whichever works best.",
+      "emailLabel": "Email",
+      "emailNote": "Drop us a line",
+      "socialNote": "Follow along",
+      "basedIn": "Based in {country}"
+    },
+    "home": {
+      "meta": {
+        "title": "Home",
+        "description": "Tommy-Portfolio"
+      },
+      "hero": {
+        "badge": "Open for new projects",
+        "titleLine1": "Building Purpose-Driven Digital Systems for Long-Term Growth.",
+        "titleLine2": "",
+        "titleLine3": "",
+        "description1": "Time is the ultimate currency. Every element of a project must serve a definitive purpose. I build solutions for clients who value a peaceful, structured approach to complex problems—focusing on taking responsibility, driving action, and delivering focused, efficient results.",
+        "description2": "Tommy | Software Engineer",
+        "github": "View Latest Projects",
+        "getStarted": "View Full Service Packages"
+      },
+      "services": {
+        "badge": "Services",
+        "heading": "What I do",
+        "lead": "Leveraging clear data, human psychology, and structured balance to create intelligent, autonomous solutions.",
+        "learnMore": "Learn more",
+        "cards": [
+          { "icon": "layout", "title": "Web Design", "description": "Thoughtful layouts that put your content first. Designed for clarity, balance, and the way people actually read on the web." },
+          { "icon": "code", "title": "Web Development", "description": "Modern sites built with Astro and Tailwind. Lean, accessible, and ready to scale with your business — no template lock-in." },
+          { "icon": "zap", "title": "SEO & Performance", "description": "Pages that load instantly and rank well from launch. Core Web Vitals, metadata, and structured data, done properly." }
+        ]
+      },
+      "portfolio": {
+        "badge": "Projects",
+        "heading": "Projects I've built",
+        "lead": "Work Built to Last.",
+        "viewAll": "View all projects"
+      },
+      "testimonials": {
+        "badge": "Testimonials",
+        "heading": "What clients say",
+        "lead": "Replace these with your own client quotes.",
+        "items": [
+          { "quote": "The new site launched on time and hit every goal we set. Performance improved dramatically — load times dropped and the feedback from our customers has been overwhelmingly positive.", "name": "Alex Morgan", "role": "Founder, Bright Studio" },
+          { "quote": "Straightforward from first conversation to final handover. The right questions were asked, we were kept in the loop throughout, and the end result exceeded what we imagined. Would recommend without hesitation.", "name": "Sarah Chen", "role": "CEO, Luma Agency" }
+        ]
+      },
+      "aboutTeaser": {
+        "badge": "About me",
+        "headingLine1": "Driven by Purpose.",
+        "headingLine2": "Built for Endurance.",
+        "para1WithLocation": "I operate with a strong, natural drive to initiate projects and push boundaries.",
+        "para2": "When I take on a challenge, I bring intense focus and take absolute ownership of the outcomes, ensuring we start strong and maintain momentum.",
+        "moreAboutMe": "More about me",
+        "statsIntro": "A few things about me.",
+        "stat1": "8 Years of Experience",
+        "stat2": "Worldwide Clients",
+        "stat3": "Fluent In English",
+        "basedIn": "Based in Vietnam"
+      },
+      "blog": {
+        "badge": "From the blog",
+        "heading": "Featured",
+        "viewAll": "View all posts"
+      },
+      "cta": {
+        "badge": "Let's talk",
+        "heading": "Starting something new?",
+        "description": "I design and build new websites from scratch — every project, start to finish, by me. Tell me what you have in mind.",
+        "primary": "Start a project",
+        "secondary": "More about me"
+      }
+    }
+  }
+}
