@@ -11,6 +11,7 @@
  * Rendering with the default locale produces the same markup the page had
  * before this was extracted.
  */
+
 import PageLayout from '@/layouts/PageLayout.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
 import Badge from '@/components/ui/data-display/Badge/Badge.astro';
@@ -48,7 +49,7 @@ interface TitleText {
 
 const { locale = defaultLocale } = Astro.props;
 
-const GITHUB_URL = 'https://github.com/hansmartensdev/astro-rocket';
+const GITHUB_URL = 'https://github.com/buildbytommy';
 
 const hero = tData<{ badge: string; titleLead: string; typingWords: string[]; description: string }>(
   'pages.about.hero',
@@ -257,7 +258,7 @@ const cta = tData<{ badge: string; heading: string; description: string; button:
       <p class="text-lg text-foreground-muted mb-8 text-balance">
         {cta.description}
       </p>
-      <Button size="lg" href={GITHUB_URL} target="_blank" rel="noopener noreferrer" class="cta-btn-brand">
+      <Button size="lg" href='contact' target="_blank" rel="noopener noreferrer" class="cta-btn-brand">
         {cta.button}
         <Icon name="arrow-right" size="sm" />
       </Button>

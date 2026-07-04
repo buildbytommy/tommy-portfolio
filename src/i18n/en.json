@@ -448,18 +448,58 @@
     },
     "home": {
       "meta": {
-        "title": "Home",
+        "title": "Portfolio",
         "description": "Tommy-Portfolio"
       },
       "hero": {
         "badge": "Open for new projects",
-        "titleLine1": "Building Purpose-Driven Digital Systems for Long-Term Growth.",
-        "titleLine2": "",
-        "titleLine3": "",
-        "description1": "Time is the ultimate currency. Every element of a project must serve a definitive purpose. I build solutions for clients who value a peaceful, structured approach to complex problems—focusing on taking responsibility, driving action, and delivering focused, efficient results.",
-        "description2": "Tommy | Software Engineer",
+        "badge2": "Core Operational Stack",
+        "titleLine1": "Hello there! I'm",
+        "titleLine2": "Han Win Aung",
+        "titleLine3": "(Tommy)",
+        "description1": "Building Purpose-Driven Digital Systems for Long-Term Growth.",
+        "description2": "My knowledge and expertise are tools for creating new opportunities, not for constantly repairing the past. My driving force is utilizing my skills to construct independent, forward-moving work.",
+        "typingWords": ["Software Engineer", "Driven by Purpose.", "Built for Endurance."],
         "github": "View Latest Projects",
-        "getStarted": "View Full Service Packages"
+        "getStarted": "View Full Service Packages",
+        "techStack": {
+          "title": "Core Engineering Stack",
+          "description": "Architecting purpose-driven systems utilizing high-performance frameworks and robust data pipelines.",
+          "categories": [
+            {
+              "name": "Base Languages",
+              "items": [
+                { "name": "JavaScript", "icon": "simple-icons:javascript", "color": "#F7DF1E" },
+                { "name": "Python", "icon": "simple-icons:python", "color": "#3776AB" },
+                { "name": "HTML 5", "icon": "simple-icons:html5", "color": "red" },
+                { "name": "CSS 3", "icon": "simple-icons:css3", "color": "#F7DF1E" }
+              ]
+            },
+            {
+              "name": "Frameworks & Tools",
+              "items": [
+                { "name": "TypeScript", "icon": "simple-icons:typescript", "color": "#3178C6" },
+                { "name": "Angular", "icon": "simple-icons:angular", "color": "#3178C6" },
+                { "name": "React", "icon": "simple-icons:react", "color": "#61DAFB" }
+              ]
+            },
+            {
+              "name": "Architecture & Styling",
+              "items": [
+                { "name": "Astro", "icon": "simple-icons:astro", "color": "#ffffff" },
+                { "name": "Tailwind", "icon": "simple-icons:tailwindcss", "color": "#38B2AC" }
+              ]
+            },
+
+            {
+              "name": "Data & Platforms",
+              "items": [
+                { "name": "WordPress", "icon": "simple-icons:wordpress", "color": "#EE4C2C" },
+                { "name": "Flask", "icon": "simple-icons:flask", "color": "#EE4C2C" }
+              ]
+            }
+          ]
+        }
       },
       "services": {
         "badge": "Services",
@@ -515,3 +555,4 @@
     }
   }
 }
+

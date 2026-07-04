@@ -77,8 +77,7 @@ const SOCIAL_PLATFORMS = [
   { key: 'github',    match: /github\.com/i,                  label: 'GitHub',      icon: 'github'    },
   { key: 'twitter',   match: /x\.com|twitter\.com/i,          label: 'X / Twitter', icon: 'x-twitter' },
   { key: 'linkedin',  match: /linkedin\.com/i,                label: 'LinkedIn',    icon: 'linkedin'  },
-  { key: 'instagram', match: /instagram\.com/i,               label: 'Instagram',   icon: 'instagram' },
-  { key: 'bluesky',   match: /bsky\.app|bluesky\.social/i,    label: 'Bluesky',     icon: 'bluesky'   },
+  { key: 'instagram', match: /instagram\.com/i,               label: 'Instagram',   icon: 'instagram' }
 ] as const;
 
 export interface ResolvedSocialLink {
